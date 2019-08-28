@@ -14,7 +14,7 @@ const ContestType = require('./contest');
 //const {fromSnakeCase} = require('../../lib/util');
 
 module.exports = new GraphQLObjectType({
-    name: 'MeType',
+    name: 'UserType',
 
     fields:{
         id:{

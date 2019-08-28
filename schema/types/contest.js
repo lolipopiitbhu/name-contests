@@ -3,9 +3,12 @@ const{
     GraphQLObjectType,
     GraphQLID,
     GraphQLString,
+    GraphQLList,
     GraphQLNonNull,
 } = require('graphql');
 
+const pgdb = require('../../database/pgdb');
+const NameType = require('./names');
 const ContestStatusType = require('./contest-status');
 
 module.exports = new GraphQLObjectType({
@@ -29,7 +32,12 @@ module.exports = new GraphQLObjectType({
         },
         createdAt:{
             type: new GraphQLNonNull(GraphQLString)
+        },
+        names:{
+            type: new GraphQLList( NameType ),
+            resolve(obj, args, {pgPool}){
+                return pgdb(pgPool).getNames(obj);
+            }
         }
-        
     }
 });
