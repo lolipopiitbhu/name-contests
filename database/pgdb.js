@@ -6,7 +6,7 @@ module.exports = pgPool => {
             return pgPool.query(
                 `SELECT * FROM users 
                 WHERE id=$1`,
-                [useId]
+                [userId]
             ).then(res => {
                 return humps.camelizeKeys(res.rows[0]);
             });
