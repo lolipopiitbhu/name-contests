@@ -9,7 +9,7 @@ const{
 } = require('graphql');
 
 //const pgdb =require('../../database/pgdb');
-const mbd = require('../../database/mdb');
+//const mbd = require('../../database/mdb');
 const ContestType = require('./contest');
 //const {fromSnakeCase} = require('../../lib/util');
 
@@ -44,22 +44,28 @@ module.exports = new GraphQLObjectType({
 
         contestsCount:{
             type: GraphQLInt,
-            resolve(obj, args, {mPool}, {fieldName}){
-                return mbd(mPool).getCounts(obj,fieldName);
+            resolve(obj, args, {loaders}, {fieldName}){
+                return loaders.mdb.usersByIds.load(obj.id)
+                .then(res => res[fieldName]);
+                //return mbd(mPool).getCounts(obj,fieldName);
             }
         },
 
         namesCount:{
             type: GraphQLInt,
-            resolve(obj, args, {mPool}, {fieldName}){
-                return mbd(mPool).getCounts(obj,fieldName);
+            resolve(obj, args, {loaders}, {fieldName}){
+                return loaders.mdb.usersByIds.load(obj.id)
+                .then(res => res[fieldName]);
+                //return mbd(mPool).getCounts(obj,fieldName);
             }
         },
 
         votesCount:{
             type: GraphQLInt,
-            resolve(obj, args, {mPool}, {fieldName}){
-                return mbd(mPool).getCounts(obj,fieldName);
+            resolve(obj, args, {loaders}, {fieldName}){
+                return loaders.mdb.usersByIds.load(obj.id)
+                .then(res => res[fieldName]);
+                //return mbd(mPool).getCounts(obj,fieldName);
             }
         }
         
