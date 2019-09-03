@@ -38,7 +38,7 @@ module.exports = new GraphQLObjectType({
             createdBy:{
                 type: new GraphQLNonNull(UserType),
                 resolve(obj, args, { loaders }){
-                    return loaders.userByIds.load(obj.createdBy);
+                    return loaders.usersByIds.load(obj.createdBy);
                     //return pgdb(pgPool).getUserById(obj.createdBy);
                 }
             }

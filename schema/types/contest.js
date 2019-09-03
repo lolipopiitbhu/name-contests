@@ -7,7 +7,7 @@ const{
     GraphQLNonNull,
 } = require('graphql');
 
-const pgdb = require('../../database/pgdb');
+//const pgdb = require('../../database/pgdb');
 const NameType = require('./names');
 const ContestStatusType = require('./contest-status');
 
@@ -35,8 +35,9 @@ module.exports = new GraphQLObjectType({
         },
         names:{
             type: new GraphQLList( NameType ),
-            resolve(obj, args, {pgPool}){
-                return pgdb(pgPool).getNames(obj);
+            resolve(obj, args, { loaders }){
+                return loaders.NamesByContestIds.load(obj.id);
+                //return pgdb(pgPool).getNames(obj);
             }
         }
     }

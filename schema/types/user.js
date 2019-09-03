@@ -8,7 +8,7 @@ const{
     GraphQLList
 } = require('graphql');
 
-const pgdb =require('../../database/pgdb');
+//const pgdb =require('../../database/pgdb');
 const mbd = require('../../database/mdb');
 const ContestType = require('./contest');
 //const {fromSnakeCase} = require('../../lib/util');
@@ -36,8 +36,9 @@ module.exports = new GraphQLObjectType({
 
         contests:{
             type: new GraphQLList(ContestType),
-            resolve(obj, args, { pgPool}){
-                return pgdb(pgPool).getContests(obj);
+            resolve(obj, args, { loaders}){
+                return loaders.ContestsByUserIds.load(obj.id);
+                //return pgdb(pgPool).getContests(obj);
             }
         },
 
