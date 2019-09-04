@@ -1,8 +1,8 @@
 const{
     GraphQLInputObjectType,
     GraphQLNonNull,
-    GraphQLString
-
+    GraphQLString,
+    GraphQLID
 } = require('graphql');
 
 const pgdb =require('../../database/pgdb');
@@ -12,7 +12,7 @@ const ContestInputType = new GraphQLInputObjectType({
     name: "contestInput",
     fields:{
         apiKey:{
-            type: new GraphQLNonNull(GraphQLString)
+            type: new GraphQLNonNull(GraphQLID)
         },
         title:{
             type: new GraphQLNonNull(GraphQLString)
@@ -22,7 +22,7 @@ const ContestInputType = new GraphQLInputObjectType({
         }
 
     }
-})
+});
 
 module.exports = {
     type : ContestType,
@@ -31,7 +31,7 @@ module.exports = {
             type: new GraphQLNonNull (ContestInputType)
         }
     },
-    resolve(obj,{input},pgPool){
+    resolve(obj,{input},{pgPool}){
         return pgdb(pgPool).addNewContest(input);
     }
-}
+};
