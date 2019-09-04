@@ -24,22 +24,32 @@ const RootQueryType = new GraphQLObjectType({
             type: UserType,
             description:'current user identified by api key',
             args:{
-                key: {
+                apiKey: {
                     type: new GraphQLNonNull(GraphQLID)
                 }
             },
             resolve: (obj, args, { loaders}) => {
                 // Read user info from database
-                return loaders.usersByApiKeys.load(args.key);
+                return loaders.usersByApiKeys.load(args.apiKey);
                 //return pgdb(pgPool).getUser(args.key);
             }
         }
     }
 });
 
+const addContestMutation = require('./mutations/add-contest');
+
+const RootMutationType = new GraphQLObjectType({
+    name: "RootMutationType",
+
+    fields: () => ({
+            addContest: addContestMutation
+        })
+});
+
 const ncSchema = new GraphQLSchema({
-    query: RootQueryType
-    // mutation:
+    query: RootQueryType,
+    mutation: RootMutationType
 });
 
 module.exports = ncSchema;
